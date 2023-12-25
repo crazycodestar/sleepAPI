@@ -27,7 +27,11 @@ app.get("/", async (req: Request, res: Response) => {
 	const time = req.query.sleep;
 	if (typeof time !== "string") return res.sendStatus(400);
 	const timeInt = parseInt(time);
-	await sleep(timeInt);
+
+	// limit the sleep duration
+	const timeValueAfterLimiter = timeInt > 25000 ? 25000 : timeInt;
+
+	await sleep(timeValueAfterLimiter);
 	res.sendStatus(200);
 });
 
