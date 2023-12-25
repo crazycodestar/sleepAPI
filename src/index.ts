@@ -17,14 +17,22 @@ dotenv.config();
 const app: Express = express();
 const port = process.env.PORT || 3000;
 
+const sleep = (milliseconds: number) => {
+	return new Promise((resolve) => setTimeout(resolve, milliseconds));
+};
+
 /* Define a route for the root path ("/")
  using the HTTP GET method */
-app.get("/", (req: Request, res: Response) => {
-  res.send("Express + TypeScript Server");
+app.get("/", async (req: Request, res: Response) => {
+	const time = req.query.sleep;
+	if (typeof time !== "string") return res.sendStatus(400);
+	const timeInt = parseInt(time);
+	await sleep(timeInt);
+	res.sendStatus(200);
 });
 
 /* Start the Express app and listen
  for incoming requests on the specified port */
 app.listen(port, () => {
-  console.log(`[server]: Server is running at http://localhost:${port}`);
+	console.log(`[server]: Server is running at http://localhost:${port}`);
 });
