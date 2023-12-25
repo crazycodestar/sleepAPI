@@ -31,6 +31,11 @@ app.get("/", async (req: Request, res: Response) => {
 	res.sendStatus(200);
 });
 
+app.use((req, res) => {
+	console.log("responding with not found");
+	res.sendStatus(404);
+});
+
 /* Start the Express app and listen
  for incoming requests on the specified port */
 app.listen(port, () => {
