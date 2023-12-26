@@ -1,6 +1,7 @@
 // src/index.ts
 import express, { Express, Request, Response } from "express";
 import dotenv from "dotenv";
+import cors from "cors";
 
 /*
  * Load up and parse configuration details from
@@ -20,6 +21,8 @@ const port = process.env.PORT || 3000;
 const sleep = (milliseconds: number) => {
 	return new Promise((resolve) => setTimeout(resolve, milliseconds));
 };
+
+app.use(cors());
 
 /* Define a route for the root path ("/")
  using the HTTP GET method */
