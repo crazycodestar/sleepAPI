@@ -9,23 +9,23 @@ SleepAPI is a lightweight API that simulates a server request and responds after
 Endpoint: `sleepapi-production.up.railway.app`
 
 ```typescript
-import { useTransition } from "react";
+import { useState } from "react";
 
 const Page = () => {
-	const [isPending, startTransition] = useTransition();
+	const [isPending, setIsPending] = useState(false);
 
 	const handleSubmit = () => {
-		startTransition(async () => {
-			try {
-				// specify how long you want to sleep(milliseconds) in the query param
-				const result = await fetch(
-					"sleepapi-production.up.railway.app?sleep=2000"
-				);
-				if (result.status === 200) return;
-			} catch (err) {
-				console.log(err);
-			}
-		});
+		setIsPending(true);
+		try {
+			// specify how long you want to sleep(milliseconds) in the query param
+			const result = await fetch(
+				"sleepapi-production.up.railway.app?sleep=2000"
+			);
+			if (result.status === 200) return;
+		} catch (err) {
+			console.log(err);
+		}
+		setIsPending(false);
 	};
 
 	<Button isLoading={isPending} onClick={handleSubmit} />;
